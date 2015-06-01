@@ -1,0 +1,10 @@
+var fs =require('fs');
+var buff=fs.readFileSync('/home/shreyasi/testfile',"utf8");
+//var buff="hello string \n hii \n dghjk";
+var str=buff.toString();
+//str=str+'\n';
+var strarray=[];
+strarray=str.split("\n");
+var k=strarray.length-1;
+console.log("the content is:"+strarray);
+console.log("the length is :"+k);
