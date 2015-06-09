@@ -13,7 +13,7 @@
                     "index" : "not_analyzed"
                 },
                 "key" : {
-                    "type" : "long"
+                    "type" : "string"
                 },
                 "timestamp" : {
                     "type" : "date"

@@ -10,12 +10,6 @@ var option = {
     _type : 'tweet1'
 };
 es = elasticsearch.createClient(config);
-/*es.indices.createIndex(function(err,data){
-   if(err)
-   {
-      console.log("Error1: " +err)
-   }
-});*/
 var fs =require('fs');
 fs.readFile('filefor_es4', function(err,strobj)
 {
