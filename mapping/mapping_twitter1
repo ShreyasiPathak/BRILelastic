@@ -5,7 +5,7 @@
             },
             "_ttl" : {
                 "enabled" : true,
-                "default" : "2d"
+                "default" : "5w"
             },
             "properties": {
                 "name" : {
@@ -17,6 +17,9 @@
                 },
                 "timestamp" : {
                     "type" : "date"
+                },
+                "value" : {
+                    "type" : "long"
                 }
             }
         }
