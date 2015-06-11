@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-"use strict";
+//"use strict";
 var u = require("../utils/gen_twitter1");
-var u1= require("../utils/handle_bcml");
+var url=require("url");
+var timerid;
 console.log(u);
 global.now = u.now; // make 'now' accessible in loaded modules
 
@@ -56,63 +57,58 @@ fs.watchFile(configFile, function()
      ConsoleLog("Config changed");
      readConfig();
 });
-function timergetdata(request,response)
-{
-   var obj;
-   if(request.url==="/get/test/data")
-   {
-      obj=setTimeout(u1.get(request,response),2000);
-   }
-   else
-   {
-       clearTimeout(obj);
-   }
-};
 // create the server!
 var server = http.createServer( function(request,response)
 {
-  //console.log("request :" + request);
+  
   ConsoleLog("Received request: " + request.url);
-  if (request.url=== "/get/test/data") 
+  var obj=url.parse(request.url);
+  console.log(obj.pathname);
+  if (request.url=== "/estest/get/test/data") 
   {
-    	ConsoleLog("Sending test data");
-    	response.writeHead(200,{
+          ConsoleLog("Sending test data");
+    	  response.writeHead(200,{
         	"Content-type":  "application/json",
         	"Cache-control": "max-age=0"
-      	});
-    	var doc1=[];
-    	doc1=u.doc_insertion(5);
-    	response.end(JSON.stringify(doc1));
-        timergetdata(request,response);
-    	return;
-  }	
-  //
-// tell the server to quit, in case you'd ever want to do that...
-//
-  if ( request.url === "/quit" ) {
-    ConsoleLog("Got a request to quit: Outta here...");
-    response.writeHead(200,{"Content-type":"text/plain"});
-    response.end("Server exiting at your request");
-    timergetdata(request,response);
-    server.close();
-    process.exit(0);
+      	  });
+    	  var doc1=[];
+    	  doc1=u.doc_insertion(5);
+    	  response.end(JSON.stringify(doc1));
+    	  return;
   }
-  
-  //
+  if ( request.url === "/estest/startpolling" ) 
+  {
+          ConsoleLog("Got a request to start timer...");
+          response.writeHead(200,{"Content-type":"text/plain"});
+          response.end("Starting timer");
+          obj1=setInterval(u.getData,2000);
+  }       
+  if ( request.url === "/estest/stoppolling" ) 
+  {
+          ConsoleLog("Got a request to stop timer...");
+          response.writeHead(200,{"Content-type":"text/plain"});
+          response.end("Stopping timer");
+          clearInterval(obj1);
+  }
+  if ( request.url === "/quit" ) 
+  {
+          ConsoleLog("Got a request to quit: Outta here...");
+          response.writeHead(200,{"Content-type":"text/plain"});
+          response.end("Server exiting at your request");
+          server.close();
+          process.exit(0);
+  }
 // Redirect a request for '/' to the main application HTML file.
 // This then falls-through to the rest of the application
-//
   var file = request.url;
   file = file.split('?')[0];
-  if ( file === "/" ) {
+  if ( file === "/" ) 
+  {
     logVerbose(now(),"Got a request for /");
     file = "/index.html";
   }
 }); //http.createServer
-//
 // Fire up the server!
-//
-
 server.listen(config.port,config.host,function() {
   ConsoleLog("Listening on " + config.host + ":" + config.port);
 });

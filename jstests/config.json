@@ -1,0 +1,7 @@
+{
+  "host": "",
+  "port": "9234",
+  "logfile": "./server.log",
+  "verbose": "1",
+  "fakedata": true
+}

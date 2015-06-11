@@ -1,11 +1,16 @@
 {
         "tweet1" : {
+            "_id" : {
+                "store" : true,
+                "index" : "not_analyzed",
+                "path" : "key"
+            },
             "_timestamp" : {
                 "enabled" : true
             },
             "_ttl" : {
                 "enabled" : true,
-                "default" : "2d"
+                "default" : "5w"
             },
             "properties": {
                 "name" : {
@@ -17,6 +22,9 @@
                 },
                 "timestamp" : {
                     "type" : "date"
+                },
+                "value" : {
+                    "type" : "long"
                 }
             }
         }

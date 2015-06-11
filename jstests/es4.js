@@ -19,7 +19,7 @@ fs.readFile('filefor_es4', function(err,strobj)
      return;
   }
   var jsonobj=JSON.parse(strobj);
-  console.log(jsonobj)
+  console.log(jsonobj);
   es.indices.putMapping(option,jsonobj,function(err,data){
      if(err)
      {

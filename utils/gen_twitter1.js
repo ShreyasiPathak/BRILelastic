@@ -1,8 +1,9 @@
-"use strict";
+//"use strict";
 var http = require("http"),
     util = require("util");
 var moment=require('moment');
 var uuid=require('node-uuid');
+
 module.exports={
  doc_insertion: function (n)
  {
@@ -14,7 +15,7 @@ module.exports={
       var newdate=wrapped.format("YYYY-MM-DDTHH:mm:ss");
       var namestr="abc"+i;
       var uniq=id+i;
-      var temp={key: uniq,name: namestr,timestamp: newdate};
+      var temp={key: uniq,name: namestr,timestamp: newdate,value: i};
       doc.push(temp);
    }
    return doc;
@@ -25,8 +26,17 @@ module.exports={
     var newdate=wrapped.format("YYYY-MM-DDTHH:mm:ss");
     return newdate;
  },
- getData: function(options,request,response,obj) 
+ getData: function() 
  {
+    var options = {
+       hostname: 'localhost',
+       port: '9234',
+       path: '/estest/get/test/data',
+       method: 'GET',
+       headers: {
+           'Content-Type': 'application/json'
+       }
+    };
     var elasticsearch = require('es');
     var config = {
      server : {
@@ -39,23 +49,11 @@ module.exports={
       _type : 'tweet1'
     };
     var es = elasticsearch.createClient(config);
-    console.log(util.inspect(obj));
-    var req = http.request(options, function(res) {
-      //logVerbose(obj.me,'Status: ' + res.statusCode);
-      //logVerbose(obj.me,'Headers: ' + JSON.stringify(res.headers));
-      if ( res.statusCode !== 200 ) {
-        response.writeHead(res.statusCode,res.headers);
-        response.end(response.text);
-      }
+    var req = http.request(options, function(res) 
+    {
       res.on('data', function (chunk) 
       {
         var chunkstr = JSON.stringify(JSON.parse(chunk));
-        //logVerbose(obj.me,'Body: ' + chunk);
-        /*if ( obj.parseData ) 
-        {
-          logVerbose(obj.me,'Parsing data...');
-          var chunkstr = JSON.stringify(JSON.parse(chunk));
-        }*/
         console.log("the data");
         console.log(chunkstr);
         var chunkarr=[];
