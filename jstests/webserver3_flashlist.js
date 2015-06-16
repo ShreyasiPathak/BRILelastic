@@ -8,8 +8,8 @@ var config = {
     }
 };
 var options = {
-     _index : "twitter1",
-     _type : "tweet1"
+     _index : "flashlist",
+     _type : "dipanalyzer"
 };
 var es = elasticsearch.createClient(config);
 var server = http.createServer(function(request, response) 
@@ -21,7 +21,7 @@ var server = http.createServer(function(request, response)
     {
        console.log(obj1.pathname);
        var jsonstr=' "query" : { "filtered" : { "query": { "match_all": {}}';
-       var jsonstr2='} },"sort" : { "timestamp" : { "order" : "asc"}}'; 
+       var jsonstr2='} },"sort" : { "Timestamp" : { "order" : "asc"}}'; 
        if(obj1.query.size)
        {
            jsonstr='"size":'+obj1.query.size+","+jsonstr;

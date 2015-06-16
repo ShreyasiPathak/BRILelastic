@@ -1,0 +1,36 @@
+{
+        "dipanalyzer" : {
+            "_timestamp" : {
+                "enabled" : true
+            },
+            "_ttl" : {
+                "enabled" : true,
+                "default" : "5w"
+            },
+            "properties": {
+                "Context": {
+                    "type": "string",
+                    "index" : "not_analyzed"
+                },
+                "lid": {
+                    "type": "string"
+                },
+                "Timestamp": {
+                    "type": "date",
+                    "format": "dateOptionalTime"
+                },
+                "Percentabort1": {
+                    "type": "float"
+                },
+                "Percentabort12": {
+                    "type": "float"
+                },
+                "Runningsum9": {
+                    "type": "float"
+                },
+                "Timelastdump": {
+                    "type": "integer"
+                }
+            }
+        }
+}

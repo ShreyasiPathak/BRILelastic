@@ -12,18 +12,42 @@ var options = {
 es = elasticsearch.createClient(config);
 es.search(options,
  {
-    size : 5,
-    _source : {
-        include : ["key", "timestamp"]
-    },
-    query : {
-      match_all : {}
-    },
-    sort : {
-      timestamp : {
-         order : "asc"
+   query : {
+      filtered : {
+            size : 5,
+           _source : {
+               include : ["key", "timestamp"]
+           },
+           sort : {
+             timestamp : {
+                order : "asc"
+             }
+           },
+           query : {
+              match_all : {}
+           },
+          
+           filter : {
+              bool : {
+                  must : [
+                      {
+                         range : {
+                            timestamp : {
+                               gte : "2015-06-11T15:41:47",
+                               lte : "2015-06-11T15:41:49"
+                            }
+                         }
+                       },
+                       {
+                          term : {
+                             name : "abc1" 
+                           }
+                        }
+                   ]
+              }
+           }
       }
-    }
+   }       
  }, 
  function(err,data) 
  {

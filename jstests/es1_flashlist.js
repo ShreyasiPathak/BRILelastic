@@ -1,7 +1,7 @@
 var elasticsearch = require('es');
 var  config = {
-    _index : 'twitter1',
-    _type : 'tweet1',
+    _index : 'flashlist',
+    _type : 'dipanalyzer',
     server : {
       host : 'brilelastic1.cern.ch',
       port : 9200
