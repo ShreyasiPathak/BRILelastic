@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+.mask_checkbox {
+  margin-left: 10px;
+}
+
+.select-view-div {
+  padding-top: 2px;
+}
+
+.select-view-div .btn {
+  width: 80%;
+}
+
+.chart {
+  min-width: 200px;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.chart-selected-message {
+  padding: 10px 20px;
+  display: inline-block;
+}
+
+.my_view {
+  display: none;
+}
+
+.highcharts-tooltip>span {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid silver;
+  border-radius: 3px;
+  box-shadow: 1px 1px 2px #888;
+  padding: 8px;
+  z-index: 2;
+}
+.highlight_red {
+  border: 1px solid red;
+}
+
+.highlight_blue {
+  border: 1px solid blue;
+}
+
+.highlight_green {
+  border: 1px solid green;
+}
+
+.highlight_yellow {
+  border: 1px solid yellow;
+}

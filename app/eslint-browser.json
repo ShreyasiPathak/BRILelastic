@@ -1,0 +1,38 @@
+{
+  "env": {
+    "browser": 1
+  },
+ 
+  "globals": {
+    "$": 1,
+    "Highcharts": 1,
+
+    // "bcm1f": 1,
+    "bcm1f_mask": 1,
+    // "basic_area": 1,
+    // "line_graph": 1,
+    // "my_view": 1,
+
+    "timers": 1,
+    "views": 1,
+    "baseUrl": 1,
+    "setupHandlers": 1,
+    "setFadeMessage": 1,
+    "getFormattedDate": 1,
+    "saveJSON": 1,
+    "ajaxFail": 1,
+    "addView": 1,
+    "setView": 1,
+  },
+ 
+  "rules": {
+    "quotes": 0,
+    "eqeqeq": 1,
+    "space-infix-ops": 0,
+    "no-console": 0,
+    "camelcase": 0,
+    "new-cap": 0,
+    "key-spacing": 0,
+    "no-unused-vars": 1,
+  }
+}
