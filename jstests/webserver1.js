@@ -79,7 +79,7 @@ var server = http.createServer( function(request,response)
   if ( request.url === "/estest/startpolling" ) 
   {
           ConsoleLog("Got a request to start timer...");
-          response.writeHead(200,{"Content-type":"text/plain"});
+          //response.writeHead(200,{"Content-type":"text/plain"});
           response.end("Starting timer");
           obj1=setInterval(u.getData,2000);
   }       
@@ -100,12 +100,18 @@ var server = http.createServer( function(request,response)
   }
 // Redirect a request for '/' to the main application HTML file.
 // This then falls-through to the rest of the application
-  var file = request.url;
+ // var file = request.url;
+  var file=request.url;
   file = file.split('?')[0];
-  if ( file === "/" ) 
+  /*if ( file === "/" ) 
   {
     logVerbose(now(),"Got a request for /");
     file = "/index.html";
+  }*/
+   if(file==="/")
+  {
+    logVerbose(now(),"Got a request for /jquery");
+    file = "/jquery2.html";
   }
   //
 // This part serves the app directory, taking care of file-type and caching
@@ -113,54 +119,19 @@ var server = http.createServer( function(request,response)
 //
 // It also handles non-existent files and if-modified-since headers.
 //
-  var imstime, mtime = new Date(fs.statSync("./app"+file).mtime);
-  fs.readFile("./app" + file,function(error,data) {
-    if ( error ) {
-//    Send a 404 for non-existent files
-      ConsoleLog("Error reading ./app"+file+": "+error);
-      response.writeHead(404,{"Content-type":"text/plain"});
-      response.end("Sorry, page not found<br>");
-      return;
-    }
-//
-//  The file exists, so deal with if-modified-since header, if given by the client
-//
-    if ( request.headers["if-modified-since"] ) {
-      imstime = new Date(request.headers["if-modified-since"]).getTime();
-      if ( mtime ) { mtime = mtime.getTime(); }
-      else         { mtime = 9999999999; }
-      if ( imstime >= mtime ) {
-        logVerbose(now(),"Not modified: ./app"+file);
-        response.writeHead(304);
-        response.end();
-        return;
+  
+    //var imstime, mtime = new Date(fs.statSync("./jquery_programs"+file).mtime);
+    fs.readFile("./jquery_programs" + file,function(error,data) {
+      if ( error ) {
+//     Send a 404 for non-existent files
+       ConsoleLog("Error reading ./jquery_programs"+file+": "+error);
+       response.writeHead(404,{"Content-type":"text/plain"});
+       response.end("Sorry, page not found<br>");
+       return;
       }
-    }
-//
-// The file was modified - or the client didn't send an if-modified-since header.
-// So, send the file!
-//
-    logVerbose(now(),"Sending ./app"+file);
-    var type;
-    if      ( file.match(/.html$/) ) { type = "text/html"; }
-    else if ( file.match(/.css$/) )  { type = "text/css"; }
-    else if ( file.match(/.js$/) )   { type = "application/javascript"; }
-    else if ( file.match(/.png$/) )  { type = "application/png"; }
-    else if ( file.match(/.ico$/) )  { type = "image/x-icon"; }
-    else if ( file.match(/.eot$/) )  { type = "application/vnd.ms-fontobject"; }
-    else if ( file.match(/.map$/) )  { type = "application/json"; } // or application/octet-stream
-    else if ( file.match(/.svg$/) )  { type = "image/svg+xml"; }
-    else if ( file.match(/.ttf$/) )  { type = "font/ttf"; }
-    else if ( file.match(/.woff$/) ) { type = "font/x-woff"; }
-
-    if ( !type ) { console.log("No Content-type for ",file); process.exit(0); }
-    response.setHeader("Content-type",  type);
-    response.setHeader("Cache-control", "max-age=3600");
-    if ( !mtime ) { console.log("No mtime for ",file); process.exit(0); }
-    response.setHeader("Last-modified", mtime);
-    response.writeHead(200);
-    response.end(data);
-  });
+      response.end(data);
+    });
+//  
 }); //http.createServer
 // Fire up the server!
 server.listen(config.port,config.host,function() {

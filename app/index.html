@@ -17,7 +17,7 @@
       <link rel="stylesheet" href="css/bootstrap.min.css">
       <style>
           body {
-              padding-top: 50px;
+              padding-top: 5px;
               padding-bottom: 20px;
           }
       </style>
@@ -33,7 +33,7 @@
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
   
-  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+ <!-- <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -47,25 +47,25 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
           <img class="navbar-right" src="/img/CMSlogo_color_nolabel_64.png" alt="BRIL logo">
-       </div><!--/.navbar-collapse -->
-    </div>
+       </div>--><!--/.navbar-collapse -->
+   <!-- </div>
   </nav>
 
-<hr>
+<hr>-->
 
 <!-- BRIL APP STARTS HERE! -->
-  <div class="container" id="chart-container">
+ <!-- <div class="container" id="chart-container">
     <div class="row">
       <div class="col-md-3" id="lhs">
-        <div id="select-views" style="padding: 5px 0"></div> <!-- #select-views -->
-      </div> <!-- .col-md-3 #lhs -->
+        <div id="select-views" style="padding: 5px 0"></div>--> <!-- #select-views -->
+     <!-- </div>--> <!-- .col-md-3 #lhs -->
 
-      <div class="col-md-9" id='rhs'>
-        <div class="row" id='control-panel'>
-          <div class="bcm1f">
-            <form> <!-- the form for managing the BCM1F masks -->
-              <div id="bcm1f_mask-management" class="form-group">
-                <div class="input-group" id="BCM1F_1Mask" class="pull-left">
+      <!--<div class="col-md-9" id='rhs'>-->
+        <!--<div class="row" id='control-panel'>-->
+          <!--<div class="bcm1f">-->
+            <!--<form>--> <!-- the form for managing the BCM1F masks -->
+              <!--<div id="bcm1f_mask-management" class="form-group">-->
+                <!--<div class="input-group" id="BCM1F_1Mask" class="pull-left">
                   <span class="input-group-addon">BCM1F_1:
                     <label class="checkbox-inline"><input id="BCM1F_1-1" type="checkbox">1&nbsp;&nbsp;</input></label>
                     <label class="checkbox-inline"><input id="BCM1F_1-2" type="checkbox">2&nbsp;&nbsp;</input></label>
@@ -80,9 +80,9 @@
                     <label class="checkbox-inline"><input id="BCM1F_1-11" type="checkbox">11&nbsp;&nbsp;</input></label>
                     <label class="checkbox-inline"><input id="BCM1F_1-12" type="checkbox">12&nbsp;&nbsp;</input></label>
                   </span>
-                </div><!-- /input-group -->
+                </div>--><!-- /input-group -->
 
-                <div class="input-group" id="BCM1F_2Mask" class="pull-left">
+                <!--<div class="input-group" id="BCM1F_2Mask" class="pull-left">
                   <span class="input-group-addon">BCM1F_2:
                     <label class="checkbox-inline"><input id="BCM1F_2-1" type="checkbox">1&nbsp;&nbsp;</input></label>
                     <label class="checkbox-inline"><input id="BCM1F_2-2" type="checkbox">2&nbsp;&nbsp;</input></label>
@@ -97,9 +97,9 @@
                     <label class="checkbox-inline"><input id="BCM1F_2-11" type="checkbox">11&nbsp;&nbsp;</input></label>
                     <label class="checkbox-inline"><input id="BCM1F_2-12" type="checkbox">12&nbsp;&nbsp;</input></label>
                   </span>
-                </div><!-- /input-group -->
+                </div>--><!-- /input-group -->
 
-                <div class="input-group" id="BCM1F_3Mask" class="pull-left">
+                <!--<div class="input-group" id="BCM1F_3Mask" class="pull-left">
                   <span class="input-group-addon">BCM1F_3:
                     <label class="checkbox-inline"><input id="BCM1F_3-1" type="checkbox">1&nbsp;&nbsp;</input></label>
                     <label class="checkbox-inline"><input id="BCM1F_3-2" type="checkbox">2&nbsp;&nbsp;</input></label>
@@ -114,9 +114,9 @@
                     <label class="checkbox-inline"><input id="BCM1F_3-11" type="checkbox">11&nbsp;&nbsp;</input></label>
                     <label class="checkbox-inline"><input id="BCM1F_3-12" type="checkbox">12&nbsp;&nbsp;</input></label>
                   </span>
-                </div><!-- /input-group -->
+                </div>--><!-- /input-group -->
 
-                <div class="input-group" id="BCM1F_4Mask" class="pull-left">
+                <!--<div class="input-group" id="BCM1F_4Mask" class="pull-left">
                   <span class="input-group-addon">BCM1F_4:
                     <label class="checkbox-inline"><input id="BCM1F_4-1" type="checkbox">1&nbsp;&nbsp;</input></label>
                     <label class="checkbox-inline"><input id="BCM1F_4-2" type="checkbox">2&nbsp;&nbsp;</input></label>
@@ -131,19 +131,19 @@
                     <label class="checkbox-inline"><input id="BCM1F_4-11" type="checkbox">11&nbsp;&nbsp;</input></label>
                     <label class="checkbox-inline"><input id="BCM1F_4-12" type="checkbox">12&nbsp;&nbsp;</input></label>
                   </span>
-                </div><!-- /input-group -->
+                </div>--><!-- /input-group -->
 
-              </div><!--  // bcm1f_mask-management -->
-              <button type="submit" class="btn btn-default" id="bcm1f_mask-channels">Mask selected channels</button>
+              <!--</div>--><!--  // bcm1f_mask-management -->
+              <!--<button type="submit" class="btn btn-default" id="bcm1f_mask-channels">Mask selected channels</button>
               <span id="bcm1f_mask-message" style="padding:10px 20px"></span>
-            </form> <!-- end of BCM1f mask-management form -->
-          </div> <!-- .bcm1f -->
+            </form> --><!-- end of BCM1f mask-management form -->
+          <!--</div>--> <!-- .bcm1f -->
 
-      </div> <!-- .col-md-9 #rhs -->
-    </div> <!-- .row -->
-  </div> <!-- .container #chart-container -->
+      <!--</div>--> <!-- .col-md-9 #rhs -->
+   <!-- </div>--> <!-- .row -->
+  <!--</div>--> <!-- .container #chart-container -->
 
-<hr>
+<!--<hr>-->
     <script src="js/vendor/jquery-1.11.1.min.js"></script>
     <script src="js/vendor/highcharts.js"></script>
     <script src="js/vendor/highcharts-more.js"></script>
@@ -161,6 +161,53 @@
     <script src="js/demo_heatmap.js"></script>
     <script src="js/demo_multiple_axes.js"></script>
     <script src="js/demo_bcml.js"></script>-->
+    <button id="button1">Start Timer</button>
+    <button id="button2">Stop Timer</button>
+    <button id="button3">Get Data</button>
+    <script>
+     $( "#button1" ).click(function(){
+         $.ajax({
+             url: "http://localhost:9234/estest/startpolling",
+             success: function(response){
+                alert('success');
+             },
+             error: function(response){
+                alert('failure');
+             }
+         }).done(function(data){
+              alert(data)}) 
+     });
+    </script>
+    <script>
+     $( "#button2" ).click(function(){
+         $.ajax({
+             url: "http://localhost:9234/estest/stoppolling",
+             success: function(){
+                alert('success');
+             },
+             error: function(){
+                alert('failure');
+             }
+         }).done(function(data){
+              alert(data)})
+     });
+    </script>
+    <script>
+     $( "#button3" ).click(function(){
+         $.ajax({
+            url: "http://localhost:9234/_search?size=3",
+            type: "POST",
+            dataType: "text",
+            success: function(){
+                alert('success');
+            },
+            error: function(){
+                alert('failure');
+            }
+         }).done(function(data){
+                console.log(data)})
+     });
+    </script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
     <script src="js/client1.js"></script>
