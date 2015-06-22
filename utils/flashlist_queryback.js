@@ -88,6 +88,7 @@ module.exports.query_back= function (obj,response)
      es.search(options,jsonobj,
           function(err,data) 
           {
+               console.log(response.toString());
                if(err)
                {
                     console.log("error1:"+err);
@@ -103,12 +104,15 @@ module.exports.query_back= function (obj,response)
                          jsonstr1.push(temp);
                          //response.write(temp);
                     }
+                    //return jsonstr1;
                     console.log("k:"+k);
+                    response.end(JSON.stringify(jsonstr1));
                     //console.log("data"+jsonstr1[0]);
-                    //response.end();
+                    
+                    
                }
+               
           }
      );
-     return jsonstr1;
-     response.end("string");
+     //response.end("string");
 };

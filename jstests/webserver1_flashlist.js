@@ -98,9 +98,9 @@ var server = http.createServer( function(request,response)
   if (obj.pathname=="/_search")
   {
     console.log("this is before query back");
-    jsonquery=u1.query_back(obj,response);
+    u1.query_back(obj,response);
     console.log("this is after query back");
-    console.log(jsonquery[0]);
+    //console.log(jsonquery[0]);
     return;
   }
 // Redirect a request for '/' to the main application HTML file.

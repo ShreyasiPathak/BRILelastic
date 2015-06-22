@@ -161,6 +161,11 @@
     <script src="js/demo_heatmap.js"></script>
     <script src="js/demo_multiple_axes.js"></script>
     <script src="js/demo_bcml.js"></script>-->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="static.js"></script>
+    <script src="dynamic.js"></script>
+    
     <button id="button1">Start Timer</button>
     <button id="button2">Stop Timer</button>
     <button id="button3">Get Data</button>
@@ -193,7 +198,7 @@
      });
     </script>
     <script>
-     $( "#button3" ).click(function(){
+    $( "#button3" ).click(function(){
          $.ajax({
             url: "http://localhost:9234/_search?size=3",
             type: "POST",
@@ -205,13 +210,52 @@
                 alert('failure');
             }
          }).done(function(data){
-                console.log(data)})
-     });
+                console.log(data);
+                var staticgraph_options={
+		         chart: {
+                    renderTo: 'container1',
+    			    type: 'spline'
+		         },
+		         title: {
+    			    text: 'Snow depth at Vikjafjellet, Norway'
+		         },
+                 subtitle: {
+    			    text: 'Irregular time data in Highcharts JS'
+		         },
+		         xAxis: {
+    			    type: 'datetime',
+    			    dateTimeLabelFormats: { // don't display the dummy year
+        			   second: '%H:%M:%S'
+    			    },
+    			    title: {
+        			   text: 'Date'
+    			    }
+		         },
+		         yAxis: {
+    			    title: {
+        			    text: 'Snow depth (m)'
+    			    },
+                    tickInterval:1,
+                    min: 0
+                 },
+                 tooltip: {
+    			    headerFormat: '<b>{series.name}</b><br>',
+    			    pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+		         },
+		         plotOptions: {
+    			    spline: {
+                        marker: {
+            		       enabled: true
+        			    }
+    			    }
+                 },
+		         series: [{name:'A',data:[1,2,3]}]
+                }
+                var chart = new Highcharts.Chart(staticgraph_options);
+                //options.series = [{name: 'A', data: [1,2,3,2,1]}]
+         });
+    });
     </script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js"></script>
-    <script src="js/client1.js"></script>
-    <script src="js/client2.js"></script>
     <!--<script src="js/demo_multiple_template.js"></script>-->
 
     <!-- TEMPLATE: add your javascript file here. Change my_view to the name of your view -->
@@ -221,7 +265,7 @@
     <!-- end of TEMPLATE: -->
 
    <!-- <script src="js/main.js"></script> --> <!-- main program driver. Don't add anything below here -->
-   <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-   <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
   </body>
 </html>
