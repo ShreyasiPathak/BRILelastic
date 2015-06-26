@@ -15,10 +15,10 @@ module.exports={
    var input="http://xdaq.web.cern.ch/xdaq/xsd/2006/xmas-10";
    for (var i=0;i<48;i++)
    {   
-      var k=i+0.5;
+      //var k=i+0.5;
       var k1=i+0.25;
       var k2=i+0.6;
-      arr.push(k);
+      arr.push(Math.random());
       arr1.push(k1);
       arr2.push(k2);
    }

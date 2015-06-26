@@ -12,13 +12,13 @@ var options = {
      _type : "dipanalyzer"
 };
 var es = elasticsearch.createClient(config);
-var jsonstr1=[];
 module.exports.query_back= function (obj,response)
 {
      console.log("hi hi");
      console.log(obj.pathname);
+     var jsonstr1=[];
      var jsonstr=' "query" : { "filtered" : { "query": { "match_all": {}}';
-     var jsonstr2='} },"sort" : { "Timestamp" : { "order" : "asc"}}'; 
+     var jsonstr2='} },"sort" : { "Timestamp" : { "order" : "desc"}}'; 
      if(obj.query.size)
      {
           console.log("I am in obj.query.size");

@@ -161,99 +161,151 @@
     <script src="js/demo_heatmap.js"></script>
     <script src="js/demo_multiple_axes.js"></script>
     <script src="js/demo_bcml.js"></script>-->
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js"></script>
-    <script src="static.js"></script>
-    <script src="dynamic.js"></script>
-    
+    <script src="js/static.js"></script>
+    <script src="js/dynamic.js"></script>
     <button id="button1">Start Timer</button>
     <button id="button2">Stop Timer</button>
-    <button id="button3">Get Data</button>
+    <br><br>
+    <button id="button3">Refresh Static Graph</button>
+    <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <hr style="height:2.5px;border:none;color:#333;background-color:#333;" />
+    <button id="button4">Refresh Dynamic Graph</button>
+    <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     <script>
      $( "#button1" ).click(function(){
          $.ajax({
-             url: "http://localhost:9234/estest/startpolling",
-             success: function(response){
+            url: "http://localhost:9234/estest/startpolling",
+            /*success: function(response){
                 alert('success');
-             },
+             },*/
              error: function(response){
                 alert('failure');
              }
-         }).done(function(data){
-              alert(data)}) 
+         }).done(function(output){
+              alert(output)
+            }) 
      });
     </script>
     <script>
      $( "#button2" ).click(function(){
          $.ajax({
-             url: "http://localhost:9234/estest/stoppolling",
-             success: function(){
+            url: "http://localhost:9234/estest/stoppolling",
+            /*success: function(){
                 alert('success');
-             },
-             error: function(){
+            },*/
+            error: function(){
                 alert('failure');
-             }
-         }).done(function(data){
-              alert(data)})
+            }
+         }).done(function(output){
+              alert(output)
+            })
      });
     </script>
     <script>
     $( "#button3" ).click(function(){
          $.ajax({
-            url: "http://localhost:9234/_search?size=3",
+            url: "http://localhost:9234/_search?size=10",
             type: "POST",
             dataType: "text",
-            success: function(){
+            /*success: function(){
                 alert('success');
-            },
+            },*/
             error: function(){
                 alert('failure');
             }
-         }).done(function(data){
-                console.log(data);
-                var staticgraph_options={
-		         chart: {
-                    renderTo: 'container1',
-    			    type: 'spline'
-		         },
-		         title: {
-    			    text: 'Snow depth at Vikjafjellet, Norway'
-		         },
-                 subtitle: {
-    			    text: 'Irregular time data in Highcharts JS'
-		         },
-		         xAxis: {
-    			    type: 'datetime',
-    			    dateTimeLabelFormats: { // don't display the dummy year
-        			   second: '%H:%M:%S'
-    			    },
-    			    title: {
-        			   text: 'Date'
-    			    }
-		         },
-		         yAxis: {
-    			    title: {
-        			    text: 'Snow depth (m)'
-    			    },
-                    tickInterval:1,
-                    min: 0
-                 },
-                 tooltip: {
-    			    headerFormat: '<b>{series.name}</b><br>',
-    			    pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-		         },
-		         plotOptions: {
-    			    spline: {
-                        marker: {
-            		       enabled: true
-        			    }
-    			    }
-                 },
-		         series: [{name:'A',data:[1,2,3]}]
+         }).done(function(output){
+                //console.log(output);
+                var result=[];
+                var resultfinal=[];
+                result=JSON.parse(output);
+                for (var j=0;j<result.length;j++) {
+                    resultfinal.push(JSON.parse(result[j]));
                 }
-                var chart = new Highcharts.Chart(staticgraph_options);
-                //options.series = [{name: 'A', data: [1,2,3,2,1]}]
+                staticgraph_options.series = [{
+                    name: "Channel_2",
+                    data: (function () {
+                        var arr = [];
+                        for (var i = 0; i < resultfinal.length; i += 1) {
+                            arr.push({
+                                x: (new Date(resultfinal[i].Timestamp)).getTime(),
+                                y: resultfinal[i].Percentabort1[2]
+                            });
+                        }
+                        arr.reverse();
+                        return arr;
+                    }())
+                },
+                {
+                    name: "Channel_10",
+                    data: (function () {
+                        var arr = [];
+                        for (var i = 0; i < resultfinal.length; i += 1) {
+                            arr.push({
+                                x: (new Date(resultfinal[i].Timestamp)).getTime(),
+                                y: resultfinal[i].Percentabort1[10]
+                            });
+                        }
+                        arr.reverse();
+                        return arr;
+                    }())
+                },
+                {
+                    name: "Channel_12",
+                    data: (function () {
+                        var arr = [];
+                        for (var i = 0; i < resultfinal.length; i += 1) {
+                            arr.push({
+                                x: (new Date(resultfinal[i].Timestamp)).getTime(),
+                                y: resultfinal[i].Percentabort1[12]
+                            });
+                        }
+                        arr.reverse();
+                        return arr;
+                    }())
+                }
+                ];
+                staticgraph_options.subtitle={ text: 'Start Time:'+resultfinal[0].Timestamp+'     '+'End Time:'+resultfinal[resultfinal.length-1].Timestamp};
+                var chart = new Highcharts.Chart(staticgraph_options);   
          });
+    });
+    </script>
+    <script>
+    $( "#button4" ).click(function(){
+        $.ajax({
+            url: "http://localhost:9234/_search?size=10",
+            type: "POST",
+            dataType: "text",
+            /*success: function(){
+                alert('success');
+            },*/
+            error: function(){
+                alert('failure');
+            }
+        }).done(function(output){
+                console.log("In dynamic graph");
+                var result=[];
+                var resultfinal=[];
+                result=JSON.parse(output);
+                for (var j=0;j<result.length;j++) {
+                    resultfinal.push(JSON.parse(result[j]));
+                }
+                dynamicgraph_options.series = [{
+                    name: "Result",
+                    data: (function () {
+                        var arr = [];
+                        for (var i = 0; i < resultfinal.length; i += 1) {
+                            arr.push({
+                                x: (new Date(resultfinal[i].Timestamp)).getTime(),
+                                y: resultfinal[i].Percentabort1[2]
+                            });
+                        }
+                        arr.reverse();
+                        return arr;
+                    }())
+                }];
+                console.log("highcharts");
+                var chart1 = new Highcharts.Chart(dynamicgraph_options);
+        });
     });
     </script>
     <!--<script src="js/demo_multiple_template.js"></script>-->
@@ -264,8 +316,6 @@
     <!-- script src="js/my_view.js"></script>
     <!-- end of TEMPLATE: -->
 
-   <!-- <script src="js/main.js"></script> --> <!-- main program driver. Don't add anything below here -->
-    <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+   <!-- <script src="js/main.js"></script> --> <!-- main program driver. Don't add anything below here --> 
   </body>
 </html>

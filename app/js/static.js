@@ -4,10 +4,9 @@ var staticgraph_options={
     			    type: 'spline'
 		         },
 		         title: {
-    			    text: 'Snow depth at Vikjafjellet, Norway'
+    			    text: 'Persentabort1'
 		         },
                  subtitle: {
-    			    text: 'Irregular time data in Highcharts JS'
 		         },
 		         xAxis: {
     			    type: 'datetime',
@@ -20,7 +19,7 @@ var staticgraph_options={
 		         },
 		         yAxis: {
     			    title: {
-        			    text: 'Snow depth (m)'
+        			    text: 'Value'
     			    },
                     tickInterval:1,
                     min: 0
