@@ -29,7 +29,7 @@ var dynamicgraph_options={
                         console.log([x,y]);
                         series.addPoint([x, y], true, true);
                     })
-                }, 3500);     
+                }, 3000);     
             }
         }
     },

@@ -151,7 +151,8 @@
     <script src="js/vendor/modules/exporting.js"></script>
     <script src="js/vendor/modules/heatmap.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/utility.js"></script>--> <!-- various utility functions & global variables -->
+    <script src="js/utility.js"></script>
+    <!-- various utility functions & global variables -->
     <!--<script src="js/bcm1f_data.js"></script>--> <!-- BCM1f display code -->
     <!--<script src="js/bcm1f_mask.js"></script>--> <!-- BCM1f mask-handling code -->
     <!--<script src="js/demo_basic_area.js"></script>
@@ -165,6 +166,78 @@
     <script src="js/dynamic.js"></script>
     <button id="button1">Start Timer</button>
     <button id="button2">Stop Timer</button>
+    <p id="basicExample">   
+    </p>
+    Date:<input id="dateinput1" type="text" placeholder="yyyy-mm-dd"/> to
+    <input id="dateinput2" type="text" placeholder="yyyy-mm-dd"/>
+    <br>
+    Time:<input id="timeinput1" type="text" placeholder="HH:mm:ss"/> to
+    <input id="timeinput2" type="text" placeholder="HH:mm:ss"/>
+    <!-- include input widgets; this is independent of Datepair.js -->
+    <script type="text/javascript" src="js/vendor/lib/jquery.ptTimeSelect.js"></script>
+    <link rel="stylesheet" type="text/css" href="js/vendor/lib/jquery.ptTimeSelect.css" />
+    <link rel="stylesheet" type="text/css" href="js/vendor/jquery-timepicker-1.3.2/jquery.timepicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/vendor/lib/bootstrap-datepicker.css" />
+    <script type="text/javascript" src="js/vendor/lib/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="js/vendor/jquery-timepicker-1.3.2/jquery.timepicker.js"></script>
+    <!--<script type="text/javascript" src="js/vendor/src/Datepair.js"></script>-->
+    <script type="text/javascript" src="js/vendor/dist/datepair.js"></script>
+    <script>
+        // initialize input widgets first
+        /*$('#basicExample .time').timepicker({
+            'timeFormat': 'HH:mm:ss',
+            
+        });*/
+        /*$('#basicExample .date').datepicker({
+            'format': 'm/d/yyyy',
+            //'autoclose': true,
+            onSelect: function(dateText, inst) {
+                var dateAsString = dateText; //the first parameter of this function
+                var dateAsObject = $(this).datepicker( "getDate" ); //the getDate method
+                console.log(dateAsString);
+                console.log(dateAsObject);
+            }
+        });*/
+        /*$("#basicExample .start").on("change",function(){
+            var selected = $(this).val();
+            console.log(selected);
+        });*/
+        var datestart;
+        var dateend;
+        var timestart;
+        var timeend;
+        $('#dateinput1').on("keypress", function(e) {
+            if (e.keyCode == 13) {
+                console.log($('#dateinput1').val());
+                datestart=$('#dateinput1').val();
+                //return false; // prevent the button click from happening
+            }
+        });
+        $('#dateinput2').on("keypress", function(e) {
+            if (e.keyCode == 13) {
+                console.log($('#dateinput2').val());
+                dateend=$('#dateinput2').val();
+                return false; // prevent the button click from happening
+            }
+        });
+        $('#timeinput1').on("keypress", function(e) {
+            if (e.keyCode == 13) {
+                console.log($('#timeinput1').val());
+                timestart=$('#timeinput1').val();
+                return false; // prevent the button click from happening
+            }
+        });
+        $('#timeinput2').on("keypress", function(e) {
+            if (e.keyCode == 13) {
+                console.log($('#timeinput2').val());
+                timeend=$('#timeinput2').val();
+                return false; // prevent the button click from happening
+            }
+        });
+        // initialize datepair
+        var basicExampleEl = document.getElementById('basicExample');
+        var datepair = new Datepair(basicExampleEl);
+    </script>
     <br><br>
     <button id="button3">Refresh Static Graph</button>
     <div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -172,141 +245,147 @@
     <button id="button4">Refresh Dynamic Graph</button>
     <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     <script>
-     $( "#button1" ).click(function(){
-         $.ajax({
-            url: "http://localhost:9234/estest/startpolling",
-            /*success: function(response){
-                alert('success');
-             },*/
-             error: function(response){
-                alert('failure');
-             }
-         }).done(function(output){
-              alert(output)
-            }) 
-     });
-    </script>
-    <script>
-     $( "#button2" ).click(function(){
-         $.ajax({
-            url: "http://localhost:9234/estest/stoppolling",
-            /*success: function(){
-                alert('success');
-            },*/
-            error: function(){
-                alert('failure');
-            }
-         }).done(function(output){
-              alert(output)
-            })
-     });
-    </script>
-    <script>
-    $( "#button3" ).click(function(){
-         $.ajax({
-            url: "http://localhost:9234/_search?size=10",
-            type: "POST",
-            dataType: "text",
-            /*success: function(){
-                alert('success');
-            },*/
-            error: function(){
-                alert('failure');
-            }
-         }).done(function(output){
-                //console.log(output);
-                var result=[];
-                var resultfinal=[];
-                result=JSON.parse(output);
-                for (var j=0;j<result.length;j++) {
-                    resultfinal.push(JSON.parse(result[j]));
+        $( "#button1" ).click(function(){
+            $.ajax({
+               url: "http://localhost:9234/estest/startpolling",
+               /*success: function(response){
+                   alert('success');
+                },*/
+                error: function(response){
+                   alert('failure');
                 }
-                staticgraph_options.series = [{
-                    name: "Channel_2",
-                    data: (function () {
-                        var arr = [];
-                        for (var i = 0; i < resultfinal.length; i += 1) {
-                            arr.push({
-                                x: (new Date(resultfinal[i].Timestamp)).getTime(),
-                                y: resultfinal[i].Percentabort1[2]
-                            });
-                        }
-                        arr.reverse();
-                        return arr;
-                    }())
-                },
-                {
-                    name: "Channel_10",
-                    data: (function () {
-                        var arr = [];
-                        for (var i = 0; i < resultfinal.length; i += 1) {
-                            arr.push({
-                                x: (new Date(resultfinal[i].Timestamp)).getTime(),
-                                y: resultfinal[i].Percentabort1[10]
-                            });
-                        }
-                        arr.reverse();
-                        return arr;
-                    }())
-                },
-                {
-                    name: "Channel_12",
-                    data: (function () {
-                        var arr = [];
-                        for (var i = 0; i < resultfinal.length; i += 1) {
-                            arr.push({
-                                x: (new Date(resultfinal[i].Timestamp)).getTime(),
-                                y: resultfinal[i].Percentabort1[12]
-                            });
-                        }
-                        arr.reverse();
-                        return arr;
-                    }())
-                }
-                ];
-                staticgraph_options.subtitle={ text: 'Start Time:'+resultfinal[0].Timestamp+'     '+'End Time:'+resultfinal[resultfinal.length-1].Timestamp};
-                var chart = new Highcharts.Chart(staticgraph_options);   
-         });
-    });
-    </script>
-    <script>
-    $( "#button4" ).click(function(){
-        $.ajax({
-            url: "http://localhost:9234/_search?size=10",
-            type: "POST",
-            dataType: "text",
-            /*success: function(){
-                alert('success');
-            },*/
-            error: function(){
-                alert('failure');
-            }
-        }).done(function(output){
-                console.log("In dynamic graph");
-                var result=[];
-                var resultfinal=[];
-                result=JSON.parse(output);
-                for (var j=0;j<result.length;j++) {
-                    resultfinal.push(JSON.parse(result[j]));
-                }
-                dynamicgraph_options.series = [{
-                    name: "Result",
-                    data: (function () {
-                        var arr = [];
-                        for (var i = 0; i < resultfinal.length; i += 1) {
-                            arr.push({
-                                x: (new Date(resultfinal[i].Timestamp)).getTime(),
-                                y: resultfinal[i].Percentabort1[2]
-                            });
-                        }
-                        arr.reverse();
-                        return arr;
-                    }())
-                }];
-                console.log("highcharts");
-                var chart1 = new Highcharts.Chart(dynamicgraph_options);
+            }).done(function(output){
+                 alert(output)
+               }) 
         });
-    });
+    </script>
+    <script>
+        $( "#button2" ).click(function(){
+            $.ajax({
+               url: "http://localhost:9234/estest/stoppolling",
+               /*success: function(){
+                   alert('success');
+               },*/
+               error: function(){
+                   alert('failure');
+               }
+            }).done(function(output){
+                 alert(output)
+               })
+        });
+    </script>
+    <script>
+        $( "#button3" ).click(function(){
+            //var datestart=$('#dateinput1').val();
+            /*console.log(datestart);
+            var dateend=$('#dateinput2').val();
+            var timestart=$('#timeinput1').val();
+            var timeend=$('#timeinput2').val()*/
+            var urlstr="http://localhost:9234/_search?size=30&"+"range=Timestamp.gte."+datestart+"T"+timestart+",Timestamp.lte."+dateend+"T"+timeend;
+            $.ajax({
+                url: urlstr,
+                type: "POST",
+                dataType: "text",
+                /*success: function(){
+                    alert('success');
+                },*/
+                error: function(){
+                    alert('failure');
+                }
+             }).done(function(output){
+                    //console.log(output);
+                    var result=[];
+                    var resultfinal=[];
+                    result=JSON.parse(output);
+                    for (var j=0;j<result.length;j++) {
+                        resultfinal.push(JSON.parse(result[j]));
+                    }
+                    staticgraph_options.series = [{
+                        name: "Channel_2",
+                        data: (function () {
+                            var arr = [];
+                            for (var i = 0; i < resultfinal.length; i += 1) {
+                                arr.push({
+                                    x: (new Date(resultfinal[i].Timestamp)).getTime(),
+                                    y: resultfinal[i].Percentabort1[2]
+                                });
+                            }
+                            arr.reverse();
+                            return arr;
+                        }())
+                    },
+                    {
+                        name: "Channel_10",
+                        data: (function () {
+                            var arr = [];
+                            for (var i = 0; i < resultfinal.length; i += 1) {
+                                arr.push({
+                                    x: (new Date(resultfinal[i].Timestamp)).getTime(),
+                                    y: resultfinal[i].Percentabort1[10]
+                                });
+                            }
+                            arr.reverse();
+                            return arr;
+                        }())
+                    },
+                    {
+                        name: "Channel_12",
+                        data: (function () {
+                            var arr = [];
+                            for (var i = 0; i < resultfinal.length; i += 1) {
+                                arr.push({
+                                    x: (new Date(resultfinal[i].Timestamp)).getTime(),
+                                    y: resultfinal[i].Percentabort1[12]
+                                });
+                            }
+                            arr.reverse();
+                            return arr;
+                        }())
+                    }
+                    ];
+                    staticgraph_options.subtitle={ text: 'Start Time:'+resultfinal[resultfinal.length-1].Timestamp+'     '+'End Time:'+resultfinal[0].Timestamp};
+                    var chart = new Highcharts.Chart(staticgraph_options);   
+             });
+        });
+    </script>
+    <script>
+        $( "#button4" ).click(function(){
+            $.ajax({
+                url: "http://localhost:9234/_search?size=10",
+                type: "POST",
+                dataType: "text",
+                /*success: function(){
+                    alert('success');
+                },*/
+                error: function(){
+                    alert('failure');
+                }
+            }).done(function(output){
+                    console.log("In dynamic graph");
+                    var result=[];
+                    var resultfinal=[];
+                    result=JSON.parse(output);
+                    for (var j=0;j<result.length;j++) {
+                        resultfinal.push(JSON.parse(result[j]));
+                    }
+                    dynamicgraph_options.series = [{
+                        name: "Result",
+                        data: (function () {
+                            var arr = [];
+                            for (var i = 0; i < resultfinal.length; i += 1) {
+                                arr.push({
+                                    x: (new Date(resultfinal[i].Timestamp)).getTime(),
+                                    y: resultfinal[i].Percentabort1[2]
+                                });
+                            }
+                            arr.reverse();
+                            return arr;
+                        }())
+                    }];
+                    console.log("highcharts");
+                    var chart1 = new Highcharts.Chart(dynamicgraph_options);
+            });
+        });
     </script>
     <!--<script src="js/demo_multiple_template.js"></script>-->
 
