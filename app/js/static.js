@@ -4,7 +4,7 @@ var staticgraph_options={
     			    type: 'spline'
 		         },
 		         title: {
-    			    text: 'Persentabort1'
+    			    text: 'Percentabort1'
 		         },
                  subtitle: {
 		         },
