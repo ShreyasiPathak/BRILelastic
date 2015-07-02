@@ -11,8 +11,8 @@ cd BRILelastic
 jstests/webserver1_flashlist.js
 
 static chart:
-2015-06-26 Enter 2015-06-26 Enter
-16:20:46 Enter     16:25:50 Enter
+2015-07-02 Enter 2015-07-02 Enter
+09:26:49 Enter     09:27:36 Enter
 
 Refresh Static Graph
 
